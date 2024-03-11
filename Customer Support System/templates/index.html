@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot Interface</title>
+  </head>
+  <body>
+    <h1>Chatbot Interface</h1>
+
+    <form method="POST" action="{{ url_for('submit') }}">
+      <label for="query">Ask a question:</label>
+      <input type="text" id="query" name="query" required />
+      <button type="submit">Submit</button>
+    </form>
+
+    <h2>Chat History</h2>
+    <div>
+      {% for exchange in db_response %}
+      <p>{{ exchange }}</p>
+      {% endfor %}
+    </div>
+
+    <h2>Chatbot Answer</h2>
+    <div>
+      <p>{{ answer }}</p>
+    </div>
+
+    <h2>DB Query</h2>
+    <div>
+      <p>{{ db_query }}</p>
+    </div>
+
+    <h2>DB Response</h2>
+    <div>
+      {% for doc in db_response %}
+      <p>{{ doc }}</p>
+      {% endfor %}
+    </div>
+  </body>
+</html>
