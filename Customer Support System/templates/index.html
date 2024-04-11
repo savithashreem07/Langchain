@@ -3,39 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chatbot Interface</title>
+    <title>Conversation Bot</title>
+    <style>
+      .chat-container {
+        width: 80%;
+        margin: auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        max-height: 500px;
+        overflow-y: scroll;
+      }
+      .message {
+        background-color: #f2f2f2;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        max-width: 80%;
+      }
+      .user-message {
+        background-color: #4caf50;
+        color: white;
+        float: right;
+      }
+      .bot-message {
+        background-color: #008cba;
+        color: white;
+        float: left;
+      }
+    </style>
   </head>
   <body>
-    <h1>Chatbot Interface</h1>
-
-    <form method="POST" action="{{ url_for('submit') }}">
-      <label for="query">Ask a question:</label>
-      <input type="text" id="query" name="query" required />
-      <button type="submit">Submit</button>
+    <h1>Conversation Bot</h1>
+    <div class="chat-container">
+      {% for message in messages %} {% if message.role == 'user' %}
+      <div class="message user-message">{{ message.content }}</div>
+      {% else %}
+      <div class="message bot-message">{{ message.content }}</div>
+      {% endif %} {% endfor %}
+    </div>
+    <form action="/" method="post">
+      <label for="question">Enter your question:</label><br />
+      <input type="text" id="question" name="question" required /><br /><br />
+      <input type="hidden" name="language" value="en" />
+      <input type="hidden" name="translate" value="true" />
+      <input type="submit" value="Submit" />
     </form>
-
-    <h2>Chat History</h2>
-    <div>
-      {% for exchange in db_response %}
-      <p>{{ exchange }}</p>
-      {% endfor %}
-    </div>
-
-    <h2>Chatbot Answer</h2>
-    <div>
-      <p>{{ answer }}</p>
-    </div>
-
-    <h2>DB Query</h2>
-    <div>
-      <p>{{ db_query }}</p>
-    </div>
-
-    <h2>DB Response</h2>
-    <div>
-      {% for doc in db_response %}
-      <p>{{ doc }}</p>
-      {% endfor %}
-    </div>
   </body>
 </html>
